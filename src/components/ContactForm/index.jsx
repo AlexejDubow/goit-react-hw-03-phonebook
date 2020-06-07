@@ -6,17 +6,17 @@ import './styles/index.module.css'
 
 const idInputName = uuidv4();
 const idInputNumber = uuidv4();
-
+const initialState = {
+  name: "",
+  number: "",
+};
 class ContactForm extends Component {
 
   static propTypes = {
     addContact: PropTypes.func.isRequired,
   };
 
-  state = {
-    name: "",
-    number: "",
-  };
+  state = {...initialState};
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({
@@ -56,6 +56,8 @@ class ContactForm extends Component {
             <label htmlFor={idInputNumber}>
               <input
                 type="tel"
+                pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}"
+                placeholder="123-45-67"
                 name="number"
                 value={number}
                 id={idInputNumber}
