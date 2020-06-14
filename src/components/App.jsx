@@ -3,6 +3,8 @@ import ContactsList from "./ContactsList";
 import Filter from "./Filter";
 import ContactForm from "./ContactForm";
 import filterContacts from "../helpers/FilterContacts";
+import isPhoneValid from '../helpers/ValidPhone';
+import parsePhone from '../helpers/ParsePhone';
 import { v4 as uuidv4 } from "uuid";
 
 
@@ -43,10 +45,13 @@ export default class App extends Component {
 
   handleAddContact = (contact) => {
     if (!this.isUniqueName(contact)) {
-      const newContact = {id: uuidv4(), ...contact };
+      if(isPhoneValid(contact.number)){
+      const newContact = {id: uuidv4(), ...contact, number: parsePhone(contact.number)};
       this.setState((prevState) => ({
         contacts: [...prevState.contacts, newContact],
-      }));
+      }))}else {
+        alert(`${contact.number} is entered incorrectly`)
+      };
     } else {
       alert(`${contact.name} is already in contacts`)
     }
@@ -55,7 +60,6 @@ export default class App extends Component {
   isUniqueName = ({ name }) => {
     return this.state.contacts.some((contact) => contact.name === name);
   };
-
   handleDelete = (id) => {
     this.setState((prevState) => ({
       contacts: prevState.contacts.filter((contact) => contact.id !== id),

@@ -19,9 +19,9 @@ class ContactForm extends Component {
   state = {...initialState};
 
   handleChange = ({ target: { name, value } }) => {
-    this.setState({
+    if(value){this.setState({
       [name]: value,
-    });
+    })};
   };
 
   handleFormSubmit = (e) => {
@@ -53,8 +53,9 @@ class ContactForm extends Component {
             <label htmlFor={idInputNumber}>
               <input
                 type="tel"
-                pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}"
-                placeholder="123-45-67"
+                size="20"
+                // pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}"
+                // placeholder="123-45-67"
                 name="number"
                 value={number}
                 id={idInputNumber}
